@@ -299,7 +299,7 @@ var USE_TYPES={'2h':{cost:1,hours:2},'4h':{cost:2,hours:4},'6h':{cost:3,hours:6}
 // ================================================================
 function load() {
   showLoadingToast('데이터 불러오는 중...');
-  fetch(API_URL + '?action=getAll')
+  fetch(API_URL + '?action=getAll', { method: 'GET', mode: 'cors', cache: 'no-cache' })
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (data.members && data.members.length > 0) {
@@ -339,9 +339,11 @@ function save() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(S)); } catch(e) {}
   // Google Sheets 저장
   fetch(API_URL, {
-    method: 'POST',
-    body: JSON.stringify({ action: 'saveAll', data: S })
-  }).catch(function() { /* 실패해도 localStorage 백업본 유지 */ });
+  method: 'POST',
+  mode: 'cors',
+  cache: 'no-cache',
+  body: JSON.stringify({ action: 'saveAll', data: S })
+})
 }
 
 function showLoadingToast(msg) {
