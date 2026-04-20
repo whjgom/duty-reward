@@ -578,7 +578,7 @@ function save() {
     var payload = encodeURIComponent(JSON.stringify(S));
     fetch(API_URL + '?action=saveAll&data=' + payload, {
       method: 'GET',
-      mode: 'no-cors'
+      mode: 'cors'
     });
   } catch(e) {}
 }
